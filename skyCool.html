@@ -1,0 +1,322 @@
+<html>
+    <body>
+        <style>
+            body {
+                --animation-speed: 10s;
+                --delay-time: -5s;
+                --time-function: cubic-bezier(0.05, 1.29, 0.65, 1.51);
+                background-color: rgb(37, 29, 24);
+                width: 1920px;
+                height: 1080px;
+                margin: unset;
+            }
+            @keyframes sunrise {
+                0% {
+                    transform: rotate(-45deg);
+                }
+
+                100% {
+                    transform: rotate(315deg);
+                }
+            }
+            @keyframes dawn {
+                0% {
+                    opacity: 1;
+                }
+                19% {
+                    opacity: 0;
+                }
+                90% {
+                    opacity: 0;
+                }
+                95% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes noon {
+                0% {
+                    opacity: 0;
+                }
+                2% {
+                    opacity: 0;
+                }
+                15% {
+                    opacity: 1;
+                }
+                35% {
+                    opacity: 1;
+                }
+                55% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
+
+            @keyframes dusk {
+                0% {
+                    opacity: 0;
+                }
+                46% {
+                    opacity: 0;
+                }
+                50% {
+                    opacity: 1;
+                }
+                56% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
+
+            @keyframes midnight {
+                0% {
+                    opacity: 0.5;
+                }
+                5% {
+                    opacity: 0;
+                }
+                55% {
+                    opacity: 0;
+                }
+                65% {
+                    opacity: 1;
+                }
+                95% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes sunLight {
+                0% {
+                    background-color: rgb(255, 163, 25);
+                }
+                10% {
+                    background-color: rgb(254, 215, 102);
+                }
+                43% {
+                    background-color: rgb(254, 215, 102);
+                }
+                50% {
+                    background-color: rgb(255, 163, 25);
+                }
+                100% {
+                    background-color: rgb(255, 163, 25);
+                }
+
+            }
+
+            .sky {
+                width: 1920px;
+                height: 1080px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                /* max-height: 600px; */
+                overflow: hidden;
+            }
+
+            .sky__phase {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                transition: opacity 0.2s;
+            }
+
+            .sky__dawn {
+                background: linear-gradient(
+                    11deg,
+                    rgba(254, 215, 102, 1) 0%,
+                    rgba(205, 237, 246, 1) 100%
+                );
+                animation: linear dawn infinite var(--animation-speed);
+                animation-delay: var(--delay-time);
+                animation-play-state: running;
+            }
+
+            .sky__noon {
+                background: linear-gradient(
+                    0deg,
+                    rgba(205, 237, 246, 1) 0%,
+                    rgba(36, 123, 160, 1) 100%
+                );
+                animation: linear noon infinite var(--animation-speed);
+                animation-delay: var(--delay-time);
+                animation-play-state: running;
+            }
+
+            .sky__dusk {
+                background: linear-gradient(
+                    0deg,
+                    rgba(255, 32, 110, 1) 0%,
+                    rgba(10, 0, 94, 1) 100%
+                );
+                animation: linear dusk infinite var(--animation-speed);
+                animation-delay: var(--delay-time);
+                animation-play-state: running;
+            }
+
+            .sky__midnight {
+                background: linear-gradient(
+                    0deg,
+                    rgba(2, 0, 20, 1) 0%,
+                    rgba(10, 0, 94, 1) 100%
+                );
+                animation: linear midnight infinite var(--animation-speed);
+                animation-delay: var(--delay-time);
+                animation-play-state: running;
+            }
+
+            .orbit {
+                top: 200px;
+                position: relative;
+                width: 1300px;
+                height: 1300px;
+                margin: 200px auto;
+                transform: rotate(-45deg);
+                animation: linear sunrise infinite var(--animation-speed);
+                animation-delay: var(--delay-time);
+                animation-play-state: running;
+
+            }
+
+            .sun {
+                position: absolute;
+                top: -40px;
+                left: -40px;
+                width: 80px;
+                height: 80px;
+                background-color: rgb(254, 215, 102);
+                border-radius: 50%;
+                box-shadow: 0 0 14px 14px rgba(254, 215, 102, 0.2);
+                animation: linear sunLight infinite var(--animation-speed);
+                animation-delay: var(--delay-time);
+                animation-play-state: running;
+            }
+
+            .moon {
+                position: absolute;
+                bottom: -40px;
+                right: -40px;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                background-color: #fff;
+                box-shadow: 0 0 7px 7px rgba(255, 255, 255, 0.2);
+            }
+
+            #sky__stars > div {
+                width: 3px;
+                height: 3px;
+                background-color: #fff;
+                border-radius: 50%;
+                position: absolute;
+            }
+
+            @keyframes cloudMove {
+                from {
+                    transform: scale(0.35) translateX(1000px);
+                }
+                to {
+                    transform: scale(0.35) translateX(0px);
+                }
+            }
+            @keyframes cloudTransparent {
+                0% {
+                    filter: opacity(0.8);
+                }
+                7% {
+                    filter: opacity(1);
+                }
+                43% {
+                    filter: opacity(0.8);
+                }
+                53% {
+                    filter: opacity(0.2);
+                }
+                100% {filter: opacity(0.2);}
+            }
+
+            .cloud {
+                background: rgba(255, 255, 255);
+                width: 300px; 
+                height: 100px;
+                border-radius: 150px;	
+                box-shadow: 10px 10px 20px 3px rgb(0 0 0 / 20%);
+                animation: move 3s infinite;
+                position: absolute;
+                top: 300px;
+                left: 300px;
+                transform: scale(0.35);
+                animation: linear                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            cloudMove infinite calc(var(--animation-speed) * 3), linear cloudTransparent infinite var(--animation-speed);
+                animation-delay: 0s, var(--delay-time);
+            }
+
+            .cloud:after {
+                content: '';
+                background: rgba(255, 255, 255);
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                top: -50px;
+                left: 50px;
+            }
+
+            .cloud:before {
+                content: '';
+                background: rgba(255, 255, 255);
+                position: absolute;
+                width: 170px;
+                height: 150px;
+                border-radius: 50%;
+                top: -90px;
+                right: 40px;
+            }
+        </style>
+        <div class="sky">
+            <div class="sky__phase sky__dawn"></div>
+            <div class="sky__phase sky__noon"></div>
+            <div class="sky__phase sky__dusk"></div>
+            <div class="sky__phase sky__midnight">
+                <div id="sky__stars"></div>
+            </div>
+            <div class="orbit">
+                <div class="sun"></div>
+                <div class="moon"></div>
+            </div>
+            <!-- <div class="sky__clouds">
+                <div class="cloud"></div>
+            </div> -->
+        </div>
+        <script>
+            const stars = 50;
+            const skyStars = document.getElementById("sky__stars");
+
+            // Generate stars randomly using absolute position
+            function createStars() {
+                for (let i = 0; i < stars; i++) {
+                    let x = Math.floor(Math.random() * 100 + 1);
+                    let y = Math.floor(Math.random() * 100 + 1);
+                    const starPoint = document.createElement("div");
+                    starPoint.style.left = `${x}%`;
+                    starPoint.style.top = `${y}%`;
+                    skyStars.appendChild(starPoint);
+                }
+            }
+            createStars();
+        </script>
+    </body>
+</html>
